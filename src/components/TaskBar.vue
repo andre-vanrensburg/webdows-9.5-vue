@@ -1,48 +1,35 @@
 <script>
 import StartMenu from "./StartMenu.vue";
 
-// // Time tooltip
-// var timeTip = new Date().toLocaleDateString();
-// document.getElementById("timetip").setAttribute("title", timeTip);
-
-// // Clock
-// function startTime() {
-//   var today = new Date();
-//   var h = today.getHours();
-//   var m = today.getMinutes();
-//   var s = today.getSeconds();
-//   // add a zero in front of numbers<10
-//   m = checkTime(m);
-//   s = checkTime(s);
-//   var hd = h;
-//   $("#timetip").html(
-//     (hd = 0 ? "12" : hd > 12 ? hd - 12 : hd) +
-//       ":" +
-//       m +
-//       " " +
-//       (h < 12 ? "AM" : "PM")
-//   );
-//   t = setTimeout(function () {
-//     startTime();
-//   }, 500);
-// }
-
-// function checkTime(i) {
-//   if (i < 10) {
-//     i = "0" + i;
-//   }
-//   return i;
-// }
-
-// startTime();
-
-// export default {
-//   name: "TaskBar",
-//   components: {
-//     name: StartMenu,
-//   },
-// };
-//
+export default {
+  name: "TaskBar",
+  components: {
+    name: StartMenu,
+  },
+  data() {
+    return {
+      hours: 0,
+      minutes: 0,
+    };
+  },
+  mounted() {
+    setInterval(() => this.setTime(), 1000);
+    // Time tooltip
+    var timeTip = new Date().toLocaleDateString();
+    document.getElementById("timetip").setAttribute("title", timeTip);
+  },
+  methods: {
+    setTime() {
+      const date = new Date();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      hours = hours <= 9 ? `${hours}`.padStart(2, 0) : hours;
+      minutes = minutes <= 9 ? `${minutes}`.padStart(2, 0) : minutes;
+      this.hours = hours;
+      this.minutes = minutes;
+    },
+  },
+};
 </script>
 
 <template>
@@ -54,7 +41,10 @@ import StartMenu from "./StartMenu.vue";
       <i class="devicon-vuejs-plain" title="View in Vue"></i>
       <i class="devicon-angularjs-plain" title="View in Angular"></i>
       <i class="devicon-svelte-plain" title="View in Svelte"></i>
-      <p class="taskbar-time-text" id="timetip"></p>
+      <p class="taskbar-time-text" id="timetip">
+        {{ hours }}:{{ minutes }}<span v-if="hours >= 13"> PM</span
+        ><span v-else> AM</span>
+      </p>
     </div>
   </div>
 
