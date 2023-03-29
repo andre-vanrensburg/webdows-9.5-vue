@@ -1,15 +1,29 @@
 <script>
-// // Start menu
-// $(".start-button").click(function () {
-//   if ($(".start-menu").css("display") == "none") {
-//     $(".start-menu").css("display", "grid");
-//   } else {
-//     $(".start-menu").css("display", "none");
-//   }
-// });
-
 export default {
   name: "StartMenu",
+  mounted() {
+    document
+      .querySelector(".start-button")
+      .addEventListener("click", function () {
+        if (document.querySelector(".start-menu").css("display") == "none") {
+          document.querySelector(".start-menu").css("display", "grid");
+        } else {
+          document.querySelector(".start-menu").css("display", "none");
+        }
+      });
+
+    // Shutdown (Reload)
+    document.querySelector(".shutdown").addEventListener("click", function () {
+      location.reload();
+    });
+
+    document
+      .querySelector(".start-menu-items ul a:not(#shutdown)")
+      .addEventListener("click", function () {
+        let myVal = document.querySelector(this).data("title");
+        openModal(myVal);
+      });
+  },
 };
 </script>
 

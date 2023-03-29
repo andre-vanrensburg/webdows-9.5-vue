@@ -1,6 +1,15 @@
 <script>
 export default {
   name: "Icons",
+  mounted() {
+    // Open window
+    document
+      .querySelector(".icon-content")
+      .dbladdEventListener("click", function () {
+        let myVal = document.querySelector(this).data("title");
+        openModal(myVal);
+      });
+  },
 };
 </script>
 
